@@ -1135,6 +1135,15 @@ theorem scalar_affine_short {K A V : Type*} [DivisionRing K] [AddCommGroup A]
   rw [← funext action]
   exact MulAction.bijective u
 
+/-- Exported form of `affine_subgraph_short` without private auxiliary constants. -/
+theorem affine_subgraph_short_export {V : Type*} (G : SimpleGraph V) (e : Color × A ↪ V)
+    (s t u : Bool) (a b c : A)
+    (star : ∀ i : Color, i ≠ 0 → ∀ x, G.Adj (e (0,x)) (e (i,x)))
+    (oneTwo : ∀ x, G.Adj (e (1,x)) (e (2,(if s then -x else x) + a)))
+    (twoThree : ∀ x, G.Adj (e (2,x)) (e (3,(if t then -x else x) + b)))
+    (threeOne : ∀ x, G.Adj (e (3,x)) (e (1,(if u then -x else x) + c))) : HasShortCycle G :=
+  affine_subgraph_short G e s t u a b c star oneTwo twoThree threeOne
+
 end Erdos64AffineCovers
 
 namespace TetrahedralReduction
